@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'article',  # 激活app
+    # 激活app
+    'article',
+    'userprofile',
 ]
 
 MIDDLEWARE = [

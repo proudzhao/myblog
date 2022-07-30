@@ -11,6 +11,9 @@
     <!-- 预留网站标题的位置 -->
     <title>{% block title %}{% endblock title %}</title>
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <!-- 引入monokai.css  深色背景的高亮样式文件-->
+    <link rel="stylesheet" href="{% static 'md_css/monokai.css' %}">
+    <script src="{% static 'jquery/jquery-3.6.0.js' %}"></script>
 </head>
 <body>
     <!-- 引入导航栏 -->
@@ -21,12 +24,18 @@
     {% include 'footer.html' %}
 
     <!-- bootstrap.js 依赖 jquery.js 和 popper.js, 因此要在前面先引入 -->
-    <script src="{% static 'jquery/jquery-3.6.0.js' %}"></script>
+{#    <script src="{% static 'jquery/jquery-3.6.0.js' %}"></script>#}
+    <script>
+        <!-- pygments表格样式较丑 在页面中用Jquery动态加载了Bootstrap的表格样式 -->
+        $('div#article_body table').addClass('table table-bordered table-hover');
+        $('div#article_body thead').addClass('thead-light');
+    </script>
     <!--
         popper.js 采用 cdn 远程引入不需要把它下载到本地。
         在实际的开发中推荐静态文件尽量都使用 cdn 的形式。
     -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1-lts/dist/umd/popper.min.js"></script>
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'layer/layer.js' %}"></script>
 </body>
 </html>

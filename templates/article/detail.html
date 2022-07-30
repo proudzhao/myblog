@@ -15,12 +15,42 @@
         <div class="row">
             <!-- 标题及作者 -->
             <h1 class="col-12 mt-4 mb-4">{{ article.title }}</h1>
-            <div class="col-12 alert alert-success">作者: {{ article.author }}</div>
+            <div class="col-12 alert alert-success">
+                作者: {{ article.author }}
+                . <a href="#" onclick="confirm_safe_delete()" style="text-decoration: none">删除文章</a>
+                <!-- 新增隐藏表单 -->
+                <form
+                        style="display: none;"
+                        id="safe_delete"
+                        action="{% url 'article:article_safe_delete' article.id %}"
+                        method="POST"
+                >
+                    {% csrf_token %}
+                    <button type="submit">发送</button>
+                </form>
+                . <a href="{% url 'article:article_update' article.id %}" style="text-decoration: none">编辑文章</a>
+            </div>
             <!-- 文章正文 -->
-            <div class="col-12">
-                <p>{{ article.body }}</p>
+            <div class="col-12" id="article_body">
+                <!-- safe过滤器表示这一段字符不需要进行转义 -->
+                <p>{{ article.body|safe }}</p>
             </div>
         </div>
     </div>
+
+    <script>
+        // 删除文章的函数
+        function confirm_safe_delete() {
+            // 调用layer弹性组件
+            layer.open({
+                title: "确认删除",
+                content: "确认删除这篇文章吗？",
+                yes: (index, layero) => {
+                    $('form#safe_delete button').click();
+                    layer.close(index);
+                }
+            })
+        }
+    </script>
 
 {% endblock content %}
