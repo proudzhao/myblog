@@ -46,8 +46,8 @@ def article_create(request):
         if article_post_form.is_valid():
             # 保存数据，但暂时不提交
             new_article = article_post_form.save(commit=False)
-            # 指定数据库中 id=1 的用户为作者
-            new_article.author = User.objects.get(id=1)
+            # 指定目前登陆的用户作为作者
+            new_article.author = User.objects.get(request.user.id)
             new_article.save()
             # 完成后返回到文章列表
             return redirect('article:article_list')

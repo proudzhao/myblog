@@ -39,9 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 激活app
+    # 注册自己的app
     'article',
     'userprofile',
+    # 注册下载的第三方app
+    # 'password_reset',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +132,14 @@ STATICFILES_DIRS = (
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# # SMTP服务器
+# EMAIL_HOST = 'smtp.qq.com'
+# # 自己对应的邮箱名
+# EMAIL_HOST_USER = 'proudzhao@qq.com'
+# EMAIL_HOST_PASSWORD = 'bgywxwyckscmcbec'
+# EMAIL_PORT = 25
+# # 是否使用TLS
+# EMAIL_USE_TLS = True
+# # 默认的发件人
+# DEFAULT_FROM_EMAIL = 'proudzhao的博客 <proudzhao@qq.com>'
