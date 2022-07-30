@@ -8,4 +8,6 @@ app_name = 'article'  # 正在部署的应用名称
 
 urlpatterns = [
     path('article-list/', views.article_list, name='article_list'),
+    # path新语法用尖括号<>定义需要传递的参数。这里需要传递名叫id的整数到视图函数中去。
+    path('article-detail/<int:id>/', views.article_detail, name='article_detail'),
 ]

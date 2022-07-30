@@ -13,3 +13,13 @@ def article_list(request):
     context = {'articles': articles}
     # render 函数: 载入模版，并返回context对象
     return render(request, 'article/list.html', context)
+
+
+# 文章详情
+def article_detail(request, id):
+    # 取出相应文章
+    article = ArticlePost.objects.get(id=id)
+    # 需要传递给模版的对象
+    context = {'article': article}
+    # 载入模版， 并返回context对象
+    return render(request, 'article/detail.html', context)

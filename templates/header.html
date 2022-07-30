@@ -9,7 +9,12 @@
             <ul class="navbar-nav">
                 <!-- 条目 -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#">文章</a>
+                    <!--
+                        点击后返回文章列表页面
+                        {# {% url '...' %} #}是Django规定的模板解耦语法
+                        它可以根据我们在urls.py中设置的名字，反向解析到对应的url中去
+                    -->
+                    <a class="nav-link" href="{% url 'article:article_list' %}">文章</a>
                 </li>
             </ul>
         </div>
