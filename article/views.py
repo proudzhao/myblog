@@ -46,17 +46,16 @@ def article_detail(request, id=None):
     article.total_views += 1
     article.save(update_fields=['total_views'])
     # 将 markdown 的语法渲染成html样式
-    article.body = markdown.markdown(
-        article.body,  # 需要渲染的文本
+    md = markdown.Markdown(
         extensions=[
-            # 包含 缩写、表格等常用扩展
             'markdown.extensions.extra',
-            # 语法高亮扩展
             'markdown.extensions.codehilite',
+            'markdown.extensions.toc',
         ]
     )
+    article.body = md.convert(article.body)
     # 需要传递给模版的对象
-    context = {'article': article}
+    context = {'article': article, 'toc': md.toc}
     # 载入模版， 并返回context对象
     return render(request, 'article/detail.html', context)
 
