@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # 注册自己的app
     'article',
     'userprofile',
+    'comment',
     # 注册下载的第三方app
     # 'password_reset',
 ]
@@ -113,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 

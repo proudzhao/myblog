@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator  # 分页模块
 from django.contrib.auth.views import login_required
 from django.db.models import Q
+from comment.models import Comment
 
 
 def article_list(request):
@@ -42,6 +43,8 @@ def article_list(request):
 def article_detail(request, id=None):
     # 取出相应文章
     article = ArticlePost.objects.get(id=id)
+    # 取出相应评论
+    comments = Comment.objects.filter(article=id)
     # 浏览量 +1
     article.total_views += 1
     article.save(update_fields=['total_views'])
@@ -55,7 +58,7 @@ def article_detail(request, id=None):
     )
     article.body = md.convert(article.body)
     # 需要传递给模版的对象
-    context = {'article': article, 'toc': md.toc}
+    context = {'article': article, 'toc': md.toc, 'comments': comments}
     # 载入模版， 并返回context对象
     return render(request, 'article/detail.html', context)
 
