@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 # timezone 用于处理时间相关的业务
 from django.utils import timezone
 from django.urls import reverse
+from taggit.managers import TaggableManager
 
 
 class ArticleColumn(models.Model):
@@ -31,6 +32,8 @@ class ArticlePost(models.Model):
         on_delete=models.CASCADE,
         related_name='article'
     )
+    # 文章标签
+    tags = TaggableManager(blank=True)
     # 文章正文。 保存大量文本使用 TextField
     body = models.TextField()
     # 文章创建时间。 参数 default=timezone.now 指定其在创建数据时将默认写入当前的时间
@@ -39,7 +42,6 @@ class ArticlePost(models.Model):
     updated = models.DateTimeField(auto_now=True)
     # 浏览量
     total_views = models.PositiveIntegerField(default=0)
-
 
     # 内部类。 用于给 model 定义元数据
     class Meta:

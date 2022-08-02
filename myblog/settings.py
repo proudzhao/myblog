@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'comment',
     # 注册下载的第三方app
     # 'password_reset',
+    'taggit',
 ]
 
 MIDDLEWARE = [
