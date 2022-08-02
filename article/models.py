@@ -9,12 +9,28 @@ from django.utils import timezone
 from django.urls import reverse
 
 
+class ArticleColumn(models.Model):
+    title = models.CharField(max_length=100, blank=True)
+    created = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.title
+
+
 # 博客文章数据类型
 class ArticlePost(models.Model):
     # 文章作者。 外键  参数 on_delete 用于指定数据删除方式
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     # 文章标题。 字符串字段
     title = models.CharField(max_length=100)
+    # 文章栏目
+    column = models.ForeignKey(
+        ArticleColumn,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name='article'
+    )
     # 文章正文。 保存大量文本使用 TextField
     body = models.TextField()
     # 文章创建时间。 参数 default=timezone.now 指定其在创建数据时将默认写入当前的时间
@@ -23,6 +39,7 @@ class ArticlePost(models.Model):
     updated = models.DateTimeField(auto_now=True)
     # 浏览量
     total_views = models.PositiveIntegerField(default=0)
+
 
     # 内部类。 用于给 model 定义元数据
     class Meta:
