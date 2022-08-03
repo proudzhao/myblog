@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.urls import reverse
 from taggit.managers import TaggableManager
+from PIL import Image
 
 
 class ArticleColumn(models.Model):
@@ -34,6 +35,8 @@ class ArticlePost(models.Model):
     )
     # 文章标签
     tags = TaggableManager(blank=True)
+    # 文章标题图
+    avatar = models.ImageField(upload_to='article/%Y%m%d/', blank=True)
     # 文章正文。 保存大量文本使用 TextField
     body = models.TextField()
     # 文章创建时间。 参数 default=timezone.now 指定其在创建数据时将默认写入当前的时间
@@ -56,3 +59,15 @@ class ArticlePost(models.Model):
 
     def get_absolute_url(self):
         return reverse('article:article_detail', args=[self.id])
+
+    def save(self, *args, **kwargs):
+        article = super(ArticlePost, self).save(*args, **kwargs)
+        if self.avatar and not kwargs.get('update_fields'):
+            image = Image.open(self.avatar)
+            (x, y) = image.size
+            new_x = 400
+            new_y = int(new_x * (y / x))
+            resized_image = image.resize((new_x, new_y), Image.ANTIALIAS)
+            resized_image.save(self.avatar.path)
+
+        return article

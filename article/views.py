@@ -9,6 +9,7 @@ from django.core.paginator import Paginator  # 分页模块
 from django.contrib.auth.views import login_required
 from django.db.models import Q
 from comment.models import Comment
+from comment.forms import CommentForm
 
 
 def article_list(request):
@@ -64,7 +65,8 @@ def article_detail(request, id=None):
     )
     article.body = md.convert(article.body)
     # 需要传递给模版的对象
-    context = {'article': article, 'toc': md.toc, 'comments': comments}
+    comment_form = CommentForm()
+    context = {'article': article, 'toc': md.toc, 'comments': comments, 'comment_form': comment_form}
     # 载入模版， 并返回context对象
     return render(request, 'article/detail.html', context)
 
@@ -74,7 +76,7 @@ def article_create(request):
     # 判断用户是否提交数据
     if request.method == 'POST':
         # 将提交的数据赋值到表单实例
-        article_post_form = ArticlePostForm(data=request.POST)
+        article_post_form = ArticlePostForm(request.POST, request.FILES)
         # 判断提交的数据是否满足数据模型
         if article_post_form.is_valid():
             # 保存数据，但暂时不提交
