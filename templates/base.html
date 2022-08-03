@@ -15,12 +15,20 @@
     <link rel="stylesheet" href="{% static 'md_css/monokai.css' %}">
     <script src="{% static 'jquery/jquery-3.6.0.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <!-- 第三方矢量图标 -->
+    <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css"
+    >
 </head>
 <body>
     <!-- 引入导航栏 -->
     {% include 'header.html' %}
-    <!-- 预留具体页面的位置 -->
-    {% block content %}{% endblock content %}
+
+    <div id="wrapper">
+        {% block content %}{% endblock content %}
+        <div id="push"></div>
+    </div>
     <!-- 引入注释脚 -->
     {% include 'footer.html' %}
 
@@ -39,5 +47,26 @@
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'layer/layer.js' %}"></script>
 {% block script %}{% endblock script %}
+
+    <!-- 引入回到顶部按钮 -->
+    {% include 'back_to_top.html' %}
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        #wrapper {
+            min-height: 100%;
+            margin-bottom: -60px;
+        }
+
+        #footer,
+        #push {
+            height: 60px;
+        }
+    </style>
+
 </body>
 </html>
