@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     # 'password_reset',
     'taggit',
     'ckeditor',
+    'mptt',
 ]
 
 MIDDLEWARE = [
@@ -184,3 +185,5 @@ CKEDITOR_CONFIGS = {
         'extraPlugins': ','.join(['codesnippet', 'prism', 'widget', 'lineutils']),
     }
 }
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
